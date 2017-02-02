@@ -91,7 +91,7 @@ class node{
 		cam=cam+c;
 	}
 }
-class trabalho
+class eightgame_solver
 	{
 
 	static int ai[]=new int[9];
