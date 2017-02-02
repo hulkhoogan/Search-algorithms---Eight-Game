@@ -4,7 +4,7 @@ class nodeheur implements Comparable<nodeheur>
 {
 	String estado;
 	int manhatan;
-	String jf=trabalho.jf;
+	String jf=eightgame_solver.jf;
 	int profundidade;
 	nodeheur(String estado, int profundidade)
 	{
