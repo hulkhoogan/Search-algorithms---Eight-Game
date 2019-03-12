@@ -1,6 +1,34 @@
 package com.eightgamesolver.utils;
 
+import com.eightgamesolver.common.Node;
+import com.eightgamesolver.exceptions.Exceptions;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+
 public interface NodesGenerator {
+    Map<String, Node> visitedMap = new HashMap<>();
+    LinkedList<String> generatedStates = new LinkedList<>();
+    String NULL = "null";
+
+    default String getSolutionPath(int[] initialState, int[] goalState) throws Exceptions.InvalidPath {
+        Node root = new Node(0, "");
+        String arrayToStringRegex = "\\[|]|,|\\s";
+        String rootState = Arrays.toString(initialState).replaceAll(arrayToStringRegex, "");
+        setFinalState(Arrays.toString(goalState).replaceAll(arrayToStringRegex, ""));
+
+        generatedStates.add(rootState);
+        visitedMap.put(rootState, root);
+        while (!generatedStates.isEmpty()) {
+            String state = generatedStates.remove();
+            if (generateDescendents(state)) {
+                return getSolutionPath();
+            }
+        }
+        throw new Exceptions.InvalidPath();
+    }
 
     default boolean generateDescendents(String parentState) {
         int zeroPosition = 0;
@@ -59,4 +87,13 @@ public interface NodesGenerator {
     }
 
     boolean validateState(String parentState, String childState, String move);
+
+    String getSolutionPath();
+
+    void setSolutionPath(String path);
+
+    String getFinalState();
+
+    void setFinalState(String finalState);
+
 }
