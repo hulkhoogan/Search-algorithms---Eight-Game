@@ -1,9 +1,4 @@
-.idea/workspace.xml
-.idea/vcs.xml
-.idea/modules.xml
-.idea/misc.xml
-.idea/encodings.xml
-.idea/Search-algorithms-Eight-Game.iml
-eight-game-solver/eight-game-solver.iml
-eight-game-solver/target/
-eight-game-solver/.idea/
+eight-game-solver.iml
+target/
+.idea/
+idea/
