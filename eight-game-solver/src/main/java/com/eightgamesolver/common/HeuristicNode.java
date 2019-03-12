@@ -38,11 +38,7 @@ public class HeuristicNode implements Comparable<HeuristicNode> {
 
     @Override
     public int compareTo(HeuristicNode toCompare) {
-
-        if (this.manhattan > toCompare.manhattan) {
-            return 1;
-        }
-        return -1;
+        return Integer.compare(this.manhattan, toCompare.getManhattan());
     }
 
 }
