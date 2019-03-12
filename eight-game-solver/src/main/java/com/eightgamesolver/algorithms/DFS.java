@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-class BFS implements NodesGenerator {
+class DFS implements NodesGenerator {
     private static final String NULL = "null";
     private static Map<String, Node> visitedMap = new HashMap<String, Node>();
     private static LinkedList<String> generatedStates = new LinkedList<String>();
@@ -20,7 +20,7 @@ class BFS implements NodesGenerator {
         Node root = new Node(0, "");
         String arrayToStringRegex = "\\[|]|,|\\s";
         String rootState = Arrays.toString(initialState).replaceAll(arrayToStringRegex, "");
-        BFS.finalState = Arrays.toString(finalState).replaceAll(arrayToStringRegex, "");
+        DFS.finalState = Arrays.toString(finalState).replaceAll(arrayToStringRegex, "");
 
         generatedStates.add(rootState);
         visitedMap.put(rootState, root);
@@ -40,7 +40,7 @@ class BFS implements NodesGenerator {
                 solutionPath = visitedMap.get(childState).getPath().replaceAll(NULL, "");
                 return true;
             }
-            generatedStates.addLast(childState);
+            generatedStates.addFirst(childState);
         }
         return false;
     }

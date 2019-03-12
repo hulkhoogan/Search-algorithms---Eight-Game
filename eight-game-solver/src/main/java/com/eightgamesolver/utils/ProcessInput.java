@@ -4,13 +4,13 @@ import com.eightgamesolver.exceptions.Exceptions;
 
 import java.util.Scanner;
 
-class ProcessInput {
+public class ProcessInput {
     private static final int SIZE_BOARD = 9;
     private int zeroPosition;
     private int[] initialState = new int[SIZE_BOARD];
     private int[] finalState = new int[SIZE_BOARD];
 
-    ProcessInput() throws Exceptions.InvalidStates {
+    public ProcessInput() throws Exceptions.InvalidStates {
         Scanner inputFromSystem = new Scanner(System.in);
         for (int i = 0; i < SIZE_BOARD; i++) {
             initialState[i] = inputFromSystem.nextInt();
