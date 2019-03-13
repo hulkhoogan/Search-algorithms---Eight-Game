@@ -1,12 +1,26 @@
-# Search-algorithms-Eight-Game
+# 8 Puzzle Solver 
 
-Search algorithms for Eight Game and respective comparisons of time and space used.
+Search algorithms for 8 Puzzle.
 
-School Work.
+---
 
+### - Search Algorithms:
+*  BFS - Breadth First Search
+*  DFS - Depth First Search
+*  IDFS - Interactive Depth First Search
+*  A* - A Star Search
+*  GREEDY - Greedy Search
+---
+### - How To?
 
-Example of execution:
+To compile or execute tests, just use maven commands.
 
-![alt tag](https://github.com/hulkhoogan/Search-algorithms-Eight-Game/blob/master/execution.png?raw=true)
+* `mvn clean install`
+* `mvn test`
 
-Also you can do your own input
+To use, just look to unit tests. A class to process input is also provided.
+
+---
+
+#### - Notes:
+Heuristic is implemented with manhattan distance.
