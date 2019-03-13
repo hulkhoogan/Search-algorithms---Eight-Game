@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class ProcessInput {
     private static final int SIZE_BOARD = 9;
-    private int zeroPosition;
     private int[] initialState = new int[SIZE_BOARD];
     private int[] finalState = new int[SIZE_BOARD];
 
@@ -14,9 +13,6 @@ public class ProcessInput {
         Scanner inputFromSystem = new Scanner(System.in);
         for (int i = 0; i < SIZE_BOARD; i++) {
             initialState[i] = inputFromSystem.nextInt();
-            if (initialState[i] == 0) {
-                this.setZeroPosition(i);
-            }
         }
         for (int i = 0; i < SIZE_BOARD; i++) {
             finalState[i] = inputFromSystem.nextInt();
@@ -29,11 +25,6 @@ public class ProcessInput {
     ProcessInput(int[] initialStateParameter, int[] finalStateParameter) throws Exceptions.InvalidStates {
         this.setInitialState(initialStateParameter);
         this.setFinalState(finalStateParameter);
-        for (int i = 0; i < SIZE_BOARD; i++) {
-            if (initialStateParameter[i] == 0) {
-                this.setZeroPosition(i);
-            }
-        }
         if (isNotAValidConfig(initialStateParameter, finalStateParameter)) {
             throw new Exceptions.InvalidStates();
         }
@@ -90,11 +81,4 @@ public class ProcessInput {
         this.finalState = finalState;
     }
 
-    private int getZeroPosition() {
-        return this.zeroPosition;
-    }
-
-    private void setZeroPosition(int position) {
-        this.zeroPosition = position;
-    }
 }

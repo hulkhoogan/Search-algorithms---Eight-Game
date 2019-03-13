@@ -41,4 +41,24 @@ public class HeuristicNode implements Comparable<HeuristicNode> {
         return Integer.compare(this.manhattan, toCompare.getManhattan());
     }
 
+    @Override
+    public int hashCode() { return Integer.parseInt(state); }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof HeuristicNode)) {
+            return false;
+        }
+        HeuristicNode toCompare = (HeuristicNode) other;
+        boolean manhattanCompare = this.getManhattan() == toCompare.getManhattan();
+        boolean stateCompare = this.getState().equals(toCompare.getState());
+        return manhattanCompare && stateCompare && this.getDepth() == toCompare.getDepth();
+    }
+
 }

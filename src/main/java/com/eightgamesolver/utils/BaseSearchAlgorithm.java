@@ -4,25 +4,29 @@ import com.eightgamesolver.common.Node;
 import com.eightgamesolver.exceptions.Exceptions;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
-public interface NodesGenerator {
-    Map<String, Node> visitedMap = new HashMap<>();
-    LinkedList<String> generatedStates = new LinkedList<>();
-    String NULL = "null";
+public abstract class BaseSearchAlgorithm {
+    private Map<String, Node> visitedMap = new HashMap<>();
+    private String solutionPath;
+    private String finalState;
 
-    default String getSolutionPath(int[] initialState, int[] goalState) throws Exceptions.InvalidPath {
+    public String getSolutionPath(int[] initialState, int[] goalState) throws Exceptions.InvalidPath {
         Node root = new Node(0, "");
         String arrayToStringRegex = "\\[|]|,|\\s";
         String rootState = Arrays.toString(initialState).replaceAll(arrayToStringRegex, "");
         setFinalState(Arrays.toString(goalState).replaceAll(arrayToStringRegex, ""));
 
+        Collection<String> generatedStates = getGeneratedStates();
         generatedStates.add(rootState);
         visitedMap.put(rootState, root);
         while (!generatedStates.isEmpty()) {
-            String state = generatedStates.remove();
+            String state = generatedStates
+                .stream().findFirst()
+                .orElse("");
+            generatedStates.remove(state);
             if (generateDescendents(state)) {
                 return getSolutionPath();
             }
@@ -30,7 +34,7 @@ public interface NodesGenerator {
         throw new Exceptions.InvalidPath();
     }
 
-    default boolean generateDescendents(String parentState) {
+    protected boolean generateDescendents(String parentState) {
         int zeroPosition = 0;
         int boardSize = parentState.length();
         char[] parsedState;
@@ -86,14 +90,28 @@ public interface NodesGenerator {
         return false;
     }
 
-    boolean validateState(String parentState, String childState, String move);
+    public abstract boolean validateState(String parentState, String childState, String move);
 
-    String getSolutionPath();
+    protected String getSolutionPath() {
+        return solutionPath;
+    }
 
-    void setSolutionPath(String path);
+    protected void setSolutionPath(String path) {
+        this.solutionPath = path;
+    }
 
-    String getFinalState();
+    public String getFinalState() {
+        return finalState;
+    }
 
-    void setFinalState(String finalState);
+    public void setFinalState(String finalState) {
+        this.finalState = finalState;
+    }
+
+    public abstract Collection<String> getGeneratedStates();
+
+    protected Map<String, Node> getVisitedMap() {
+        return this.visitedMap;
+    }
 
 }

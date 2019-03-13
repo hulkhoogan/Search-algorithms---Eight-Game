@@ -8,7 +8,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-version}</version>
                 <configuration>
@@ -20,11 +19,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/*DFSTest.java</exclude>
-                    </excludes>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -34,20 +28,18 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>${junit-jupiter-version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit-jupiter-version}</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit-jupiter-version>5.4.0</junit-jupiter-version>
+        <junit-jupiter-version>5.0.1</junit-jupiter-version>
         <maven-compiler-version>3.8.0</maven-compiler-version>
-        <maven-surefire-version>2.22.1</maven-surefire-version>
+        <maven-surefire-version>2.22.0</maven-surefire-version>
     </properties>
 </project>
 
