@@ -38,12 +38,12 @@ public class ProcessInput {
         int inversionsInitialState = countInversionsInState(stateInitial);
         int inversionsFinalState = countInversionsInState(stateFinal);
 
-        return ((!isPair(inversionsInitialState) || !isPair(inversionsFinalState)) && (isPair(inversionsInitialState)
-            || isPair(inversionsFinalState)));
+        return ((!isEven(inversionsInitialState) || !isEven(inversionsFinalState))
+            && (isEven(inversionsInitialState) || isEven(inversionsFinalState)));
 
     }
 
-    private boolean isPair(int number) {
+    private boolean isEven(int number) {
         return number % 2 == 0;
     }
 

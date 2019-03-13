@@ -2,11 +2,7 @@ package com.eightgamesolver.utils;
 
 public class ManhattanDistanceCalculator {
 
-    private int manhattanDistance;
-
-    ManhattanDistanceCalculator(String state, int depth, String goalState) {
-        this.manhattanDistance = calculate(state, depth, goalState);
-    }
+    private ManhattanDistanceCalculator() {}
 
     public static int calculate(String state, int depth, String goalState) {
         int totalDistance = 0;
@@ -44,16 +40,10 @@ public class ManhattanDistanceCalculator {
         int xDistance;
         if (x < 3) {
             xDistance = x;
-        } else if (x < 6) {
-            xDistance = x % 3;
         } else {
             xDistance = x % 3;
         }
         return xDistance;
-    }
-
-    int getManhattanDistance() {
-        return this.manhattanDistance;
     }
 
 }
