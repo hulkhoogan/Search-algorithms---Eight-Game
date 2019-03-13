@@ -12,7 +12,7 @@ class ASTARTest {
         ValidConfigs validConfig1 = ValidConfigs.getValidConfig1();
         int[] initialState = validConfig1.getInitialState();
         int[] finalState = validConfig1.getFinalState();
-        String solutionPath = new ASTAR().getSolutionPath(initialState, finalState);
+        String solutionPath = new ASTAR(initialState, finalState).getSolutionPath();
         Assertions.assertEquals("ULDRRULLDRRUULLDDRURULD", solutionPath);
         Assertions.assertEquals(23, solutionPath.length());
     }
@@ -22,7 +22,7 @@ class ASTARTest {
         ValidConfigs validConfig2 = ValidConfigs.getValidConfig2();
         int[] initialState = validConfig2.getInitialState();
         int[] finalState = validConfig2.getFinalState();
-        String solutionPath = new ASTAR().getSolutionPath(initialState, finalState);
+        String solutionPath = new ASTAR(initialState, finalState).getSolutionPath();
         Assertions.assertEquals("RDLDRRULLDRUURDDLLURRD", solutionPath);
         Assertions.assertEquals(22, solutionPath.length());
     }

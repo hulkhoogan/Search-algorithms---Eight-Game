@@ -10,16 +10,33 @@ import java.util.Map;
 
 public abstract class BaseSearchAlgorithm {
     private Map<String, Node> visitedMap = new HashMap<>();
-    private String solutionPath;
+    private String finalPath;
     private String finalState;
+    private String initialState;
+    private int maxDepth;
 
-    public String getSolutionPath(int[] initialState, int[] goalState) throws Exceptions.InvalidPath {
-        Node root = new Node(0, "");
+    public BaseSearchAlgorithm(int[] initialState, int[] goalState) {
+        setInitialAndFinalState(initialState, goalState);
+    }
+
+    public BaseSearchAlgorithm(int[] initialState, int[] goalState, int maxDepth) {
+        setInitialAndFinalState(initialState, goalState);
+        this.setMaxDepth(maxDepth);
+    }
+
+    private void setInitialAndFinalState(int[] initialState, int[] goalState) {
         String arrayToStringRegex = "\\[|]|,|\\s";
         String rootState = Arrays.toString(initialState).replaceAll(arrayToStringRegex, "");
-        setFinalState(Arrays.toString(goalState).replaceAll(arrayToStringRegex, ""));
+        String endState = Arrays.toString(goalState).replaceAll(arrayToStringRegex, "");
+        this.setInitialState(rootState);
+        this.setFinalState(endState);
+    }
+
+    public String getSolutionPath() throws Exceptions.InvalidPath {
+        Node root = new Node(0, "");
 
         Collection<String> generatedStates = getGeneratedStates();
+        String rootState = getInitialState();
         generatedStates.add(rootState);
         visitedMap.put(rootState, root);
         while (!generatedStates.isEmpty()) {
@@ -28,7 +45,7 @@ public abstract class BaseSearchAlgorithm {
                 .orElse("");
             generatedStates.remove(state);
             if (generateDescendents(state)) {
-                return getSolutionPath();
+                return getFinalPath();
             }
         }
         throw new Exceptions.InvalidPath();
@@ -52,7 +69,7 @@ public abstract class BaseSearchAlgorithm {
             parsedState[zeroPosition] = parsedState[zeroPosition - 3];
             parsedState[zeroPosition - 3] = temp;
             String childState = new String(parsedState);
-            if (validateState(parentState, childState, "U")) {
+            if (validateState(parentState, childState, 'U')) {
                 return true;
             }
         }
@@ -63,7 +80,7 @@ public abstract class BaseSearchAlgorithm {
             parsedState[zeroPosition] = parsedState[zeroPosition + 3];
             parsedState[zeroPosition + 3] = temp;
             String childState = new String(parsedState);
-            if (validateState(parentState, childState, "D")) {
+            if (validateState(parentState, childState, 'D')) {
                 return true;
             }
         }
@@ -74,7 +91,7 @@ public abstract class BaseSearchAlgorithm {
             parsedState[zeroPosition] = parsedState[zeroPosition - 1];
             parsedState[zeroPosition - 1] = temp;
             String childState = new String(parsedState);
-            if (validateState(parentState, childState, "L")) {
+            if (validateState(parentState, childState, 'L')) {
                 return true;
             }
         }
@@ -85,19 +102,43 @@ public abstract class BaseSearchAlgorithm {
             parsedState[zeroPosition] = parsedState[zeroPosition + 1];
             parsedState[zeroPosition + 1] = temp;
             String childState = new String(parsedState);
-            return validateState(parentState, childState, "R");
+            return validateState(parentState, childState, 'R');
         }
         return false;
     }
 
-    public abstract boolean validateState(String parentState, String childState, String move);
-
-    protected String getSolutionPath() {
-        return solutionPath;
+    public boolean validateState(String parentState, String childState, Character move) {
+        if (!visitedMap.containsKey(childState)) {
+            if (!processNode(parentState, childState, move)) {
+                Collection<String> generatedStates = getGeneratedStates();
+                generatedStates.add(childState);
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 
-    protected void setSolutionPath(String path) {
-        this.solutionPath = path;
+    protected boolean processNode(String parentState, String childState, Character move) {
+        Node parentNode = visitedMap.get(parentState);
+        int parentDepth = parentNode.getDepth();
+        String currentPath = parentNode.getPath();
+        Node childNode = new Node((parentDepth + 1), (currentPath + move));
+        visitedMap.put(childState, childNode);
+        if (childState.equals(finalState)) {
+            String path = childNode.getPath();
+            this.setFinalPath(path.replaceAll("null", ""));
+            return true;
+        }
+        return false;
+    }
+
+    protected String getFinalPath() {
+        return finalPath;
+    }
+
+    private void setFinalPath(String path) {
+        this.finalPath = path;
     }
 
     public String getFinalState() {
@@ -108,10 +149,25 @@ public abstract class BaseSearchAlgorithm {
         this.finalState = finalState;
     }
 
+    public String getInitialState() {
+        return initialState;
+    }
+
+    public void setInitialState(String initialState) {
+        this.initialState = initialState;
+    }
+
     public abstract Collection<String> getGeneratedStates();
 
     protected Map<String, Node> getVisitedMap() {
         return this.visitedMap;
     }
 
+    protected int getMaxDepth() {
+        return maxDepth;
+    }
+
+    private void setMaxDepth(int maxDepth) {
+        this.maxDepth = maxDepth;
+    }
 }

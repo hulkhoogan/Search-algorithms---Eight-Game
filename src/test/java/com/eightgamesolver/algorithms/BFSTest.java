@@ -12,7 +12,7 @@ class BFSTest {
         ValidConfigs validConfig1 = ValidConfigs.getValidConfig1();
         int[] initialState = validConfig1.getInitialState();
         int[] finalState = validConfig1.getFinalState();
-        String solutionPath = new BFS().getSolutionPath(initialState, finalState);
+        String solutionPath = new BFS(initialState, finalState).getSolutionPath();
         Assertions.assertEquals("ULDRURDLULDRURULLDRRULD", solutionPath);
         Assertions.assertEquals(23, solutionPath.length());
     }
@@ -22,7 +22,7 @@ class BFSTest {
         ValidConfigs validConfig2 = ValidConfigs.getValidConfig2();
         int[] initialState = validConfig2.getInitialState();
         int[] finalState = validConfig2.getFinalState();
-        String solutionPath = new BFS().getSolutionPath(initialState, finalState);
+        String solutionPath = new BFS(initialState, finalState).getSolutionPath();
         Assertions.assertEquals("DRRULLDDRUURDLLURRDLDR", solutionPath);
         Assertions.assertEquals(22, solutionPath.length());
     }

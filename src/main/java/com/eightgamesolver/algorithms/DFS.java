@@ -9,16 +9,19 @@ import java.util.Map;
 class DFS extends BaseSearchAlgorithm {
     private LinkedList<String> generatedStates = new LinkedList<>();
 
-    public boolean validateState(String parentState, String childState, String move) {
+    DFS(int[] initialState, int[] goalState) {
+        super(initialState, goalState);
+    }
+
+    @Override
+    public boolean validateState(String parentState, String childState, Character move) {
         Map<String, Node> visitedMap = getVisitedMap();
         if (!visitedMap.containsKey(childState)) {
-            visitedMap.put(childState, new Node((visitedMap.get(parentState).getDepth() + 1), (visitedMap.get(parentState).getPath() + move)));
-            String finalState = getFinalState();
-            if (childState.equals(finalState)) {
-                setSolutionPath(visitedMap.get(childState).getPath().replaceAll("null", ""));
+            if (!processNode(parentState, childState, move)) {
+                generatedStates.addFirst(childState);
+            } else {
                 return true;
             }
-            generatedStates.addFirst(childState);
         }
         return false;
     }

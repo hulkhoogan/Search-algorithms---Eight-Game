@@ -12,7 +12,7 @@ class IDFSTest {
         ValidConfigs validConfig1 = ValidConfigs.getValidConfig1();
         int[] initialState = validConfig1.getInitialState();
         int[] finalState = validConfig1.getFinalState();
-        String solutionPath = new IDFS().getSolutionPath(initialState, finalState, 50);
+        String solutionPath = new IDFS(initialState, finalState, 40).getSolutionPath();
         Assertions.assertEquals(
             "ULDRURDLULDRURULLDRRULD",
             solutionPath);
@@ -24,7 +24,7 @@ class IDFSTest {
         ValidConfigs validConfig2 = ValidConfigs.getValidConfig2();
         int[] initialState = validConfig2.getInitialState();
         int[] finalState = validConfig2.getFinalState();
-        String solutionPath = new IDFS().getSolutionPath(initialState, finalState, 22);
+        String solutionPath = new IDFS(initialState, finalState, 22).getSolutionPath();
         Assertions.assertEquals("DRRULLDDRUURDLLURRDLDR", solutionPath);
         Assertions.assertEquals(22, solutionPath.length());
     }
